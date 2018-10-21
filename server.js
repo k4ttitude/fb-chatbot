@@ -30,7 +30,6 @@ app.get('/webhook', function(req, res) { // Đây là path để validate tooken
  
 app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của người dùng gửi đến
   console.log("webhook received a request");
-  console.log(req.body);
   if (req.body.object === 'page') {
     req.body.entry.forEach(entry => {
       entry.messaging.forEach(event => {
@@ -56,7 +55,7 @@ function sendMessage(senderId, message) {
     method: 'POST',
     json: {
       recipient: { id: senderId },
-      message: message,
+      message: { text: message },
     }
   }, (error, response, body) => {
     if (!error && response.statusCode === 200) {
