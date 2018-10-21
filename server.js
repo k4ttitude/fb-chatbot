@@ -30,6 +30,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
     req.body.entry.forEach(entry => {
       entry.messaging.forEach(event => {
         if (event.message && event.message.text) {
+          console.log("sent a message: " + event.message.text);
           sendMessage(event.sender.id, "Hello I'm a bot replying to your message: '" 
             + event.message.text + "'");
         }
