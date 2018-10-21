@@ -26,7 +26,7 @@ app.get('/webhook', function(req, res) { // Đây là path để validate tooken
  
 app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của người dùng gửi đến
   console.log("webhook received a request");
-  if (req.body.object === 'page') {
+  if (req.body.object == 'page') {
     req.body.entry.forEach(entry => {
       entry.messaging.forEach(event => {
         if (event.message && event.message.text) {
