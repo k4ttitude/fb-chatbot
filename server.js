@@ -1,6 +1,6 @@
-const APP_SECRET = 'you app_secret';
-const VALIDATION_TOKEN = 'TokenTuyChon';
-const PAGE_ACCESS_TOKEN = 'your page_access_token';
+const APP_SECRET = '6088d6960a9929d5b68d61c192ad642f';
+const VALIDATION_TOKEN = 'MyToken';
+const PAGE_ACCESS_TOKEN = '233bf27ebce5923a601b21e2f429d68d';
  
 var http = require('http');
 var bodyParser = require('body-parser');
@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 });
  
 app.get('/webhook', function(req, res) { // Đây là path để validate tooken bên app facebook gửi qua
-  if (req.query['hub.verify_token'] === VALIDATION_TOKEN) {
+  if (req.query['hub.verify_token'] == VALIDATION_TOKEN) {
     res.send(req.query['hub.challenge']);
   }
   res.send('Error, wrong validation token');
