@@ -61,7 +61,7 @@ function sendMessage(senderId, message) {
     if (!error && response.statusCode === 200) {
       // Message has been successfully received by Facebook.
       console.log(
-        `Successfully sent message to ${endPoint} endpoint: `,
+        `Successfully sent message to endpoint: `,
         JSON.stringify(body)
       );
     } else {
