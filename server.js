@@ -56,7 +56,7 @@ function sendMessage(senderId, message) {
     method: 'POST',
     json: {
       recipient: { id: senderId },
-      message: { message },
+      message: message,
     }
   }, (error, response, body) => {
     if (!error && response.statusCode === 200) {
