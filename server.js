@@ -7,9 +7,11 @@ var bodyParser = require('body-parser');
 var express = require('express');
  
 var app = express();
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+// app.use(bodyParser.urlencoded({
+//   extended: false
+// }));
+app.use(bodyParser.json());
+
 var server = http.createServer(app);
 var request = require("request");
 
@@ -28,7 +30,7 @@ app.get('/webhook', function(req, res) { // Đây là path để validate tooken
  
 app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của người dùng gửi đến
   console.log("webhook received a request");
-  console.log(req.body.object);
+  console.log(req.body);
   if (req.body.object === 'page') {
     req.body.entry.forEach(entry => {
       entry.messaging.forEach(event => {
