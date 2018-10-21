@@ -52,13 +52,26 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
 function sendMessage(senderId, message) {
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: {
-      access_token: PAGE_ACCESS_TOKEN,
-    },
+    qs: { access_token: PAGE_ACCESS_TOKEN, },
     method: 'POST',
     json: {
       recipient: { id: senderId },
       message: { message },
+    }
+  }, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      // Message has been successfully received by Facebook.
+      console.log(
+        `Successfully sent message to ${endPoint} endpoint: `,
+        JSON.stringify(body)
+      );
+    } else {
+      console.error(
+        `Failed calling Messenger API endpoint `,
+        response.statusCode,
+        response.statusMessage,
+        body.error
+      );
     }
   });
 }
