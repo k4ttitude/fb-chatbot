@@ -1,6 +1,6 @@
 const APP_SECRET = '6088d6960a9929d5b68d61c192ad642f';
 const VALIDATION_TOKEN = 'MyToken';
-const PAGE_ACCESS_TOKEN = 'EAAE73JnZByQcBAD7yFxDWv8QwkLcr6E9n15vpd6t3cS2KbCODjpuH5LcwPZBQDqbymxMTZCxwPesIZCTzO9JnTJvuIhMu4SEhLmEa57vxYYKxkZBPMktFQiwSKYKzvZChy7ZAfuM21l4d8WpJl4LpBfXZCOTGedCF2QYNnt8FjHz2C2ZApJRV1d4g';
+const PAGE_ACCESS_TOKEN = 'EAAE73JnZByQcBAPEBSUGiRc8AldNfxVwxWE1Kajihe5dwlqlpUQKYZCGVfWl4RhQE19dZB26p163qPF0MYAir9x6mQ0ZAWkjUE9q6Ehq2Nky1QSS8fEuKsNd5oO4mqArPjp6F1aeZA9YaPQyGZAM3XR5YEvKJV9YSZBWW1ytBFYgu3QlcxWu1Uu';
  
 var http = require('http');
 var bodyParser = require('body-parser');
@@ -12,6 +12,8 @@ app.use(bodyParser.urlencoded({
 }));
 var server = http.createServer(app);
 var request = require("request");
+
+var sendMessage = require('../messageSender');
  
 app.get('/', (req, res) => {
   res.send("Home page. Server running okay.");
@@ -26,7 +28,8 @@ app.get('/webhook', function(req, res) { // Đây là path để validate tooken
  
 app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của người dùng gửi đến
   console.log("webhook received a request");
-  if (req.body.object == 'page') {
+  console.log(req.body.object);
+  if (req.body.object === 'page') {
     req.body.entry.forEach(entry => {
       entry.messaging.forEach(event => {
         if (event.message && event.message.text) {
@@ -44,23 +47,19 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
 });
  
 // Đây là function dùng api của facebook để gửi tin nhắn
-function sendMessage(senderId, message) {
-  request({
-    url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: {
-      access_token: PAGE_ACCESS_TOKEN,
-    },
-    method: 'POST',
-    json: {
-      recipient: {
-        id: senderId
-      },
-      message: {
-        message
-      },
-    }
-  });
-}
+// function sendMessage(senderId, message) {
+//   request({
+//     url: 'https://graph.facebook.com/v2.6/me/messages',
+//     qs: {
+//       access_token: PAGE_ACCESS_TOKEN,
+//     },
+//     method: 'POST',
+//     json: {
+//       recipient: { id: senderId },
+//       message: { message },
+//     }
+//   });
+// }
  
 app.set('port', process.env.PORT || 5000);
 app.set('ip', process.env.IP || "0.0.0.0");
