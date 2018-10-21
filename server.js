@@ -26,21 +26,18 @@ app.get('/webhook', function(req, res) { // Đây là path để validate tooken
  
 app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của người dùng gửi đến
   console.log("webhook received a request");
-  var entries = req.body.entry;
-  for (var entry of entries) {
-    var messaging = entry.messaging;
-    for (var message of messaging) {
-      var senderId = message.sender.id;
-      if (message.message) {
-        if (message.message.text) {
-          var text = message.message.text;
-          console.log("message: " + text);
-          sendMessage(senderId, "Hello!! I'm a bot. Your message: " + text);
+  if (req.body.object === 'page') {
+    req.body.entry.forEach(entry => {
+      entry.messaging.forEach(event => {
+        if (event.message && event.message.text) {
+          sendMessage(event.sender.id, "Hello I'm a bot replying to your message: '" 
+            + event.message.text + "'");
         }
-      }
-    }
+      });
+    });
+
+    res.status(200).end();
   }
-  res.status(200).send("OK");
 });
  
 // Đây là function dùng api của facebook để gửi tin nhắn
