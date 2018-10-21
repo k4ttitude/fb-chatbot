@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({
 var server = http.createServer(app);
 var request = require("request");
 
-var sendMessage = require('../messageSender');
+// var sendMessage = require('../messageSender');
  
 app.get('/', (req, res) => {
   res.send("Home page. Server running okay.");
@@ -47,19 +47,19 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
 });
  
 // Đây là function dùng api của facebook để gửi tin nhắn
-// function sendMessage(senderId, message) {
-//   request({
-//     url: 'https://graph.facebook.com/v2.6/me/messages',
-//     qs: {
-//       access_token: PAGE_ACCESS_TOKEN,
-//     },
-//     method: 'POST',
-//     json: {
-//       recipient: { id: senderId },
-//       message: { message },
-//     }
-//   });
-// }
+function sendMessage(senderId, message) {
+  request({
+    url: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: {
+      access_token: PAGE_ACCESS_TOKEN,
+    },
+    method: 'POST',
+    json: {
+      recipient: { id: senderId },
+      message: { message },
+    }
+  });
+}
  
 app.set('port', process.env.PORT || 5000);
 app.set('ip', process.env.IP || "0.0.0.0");
