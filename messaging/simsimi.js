@@ -23,21 +23,20 @@ const request = (api, query) => {
 const format = response => {
 	switch(response.result){
 		case 100:
-		return response.response;
+			return response.response;
 		default:
-		const err = new Error(response.msg);
-		err.code = response.result;
-		throw err;
+			const err = new Error(response.msg);
+			err.code = response.result;
+			throw err;
 	}
 };
 /**
  * simsimi
  * http://developer.simsimi.com/api
  */
- module.exports = options => {
+module.exports = options => {
  	const { 
  		key = 'b90c5eb9-ceaa-4988-8afa-b4a5b3633077',
- 		lc = 'en', ft = '0.0',
  		api = 'http://sandbox.api.simsimi.com/request.p'
  	} = options;
  	return query => {
@@ -47,4 +46,4 @@ const format = response => {
  			key, lc, ft
  		}, query)).then(format);
  	};
- };
+};

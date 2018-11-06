@@ -4,8 +4,10 @@ const simsimi = require('simsimi')({
 });
 
 const reply = message => {
-	simsimi(message).then(response => {
-  		return response;
+	return new Promise((resolve, reject) => {
+		simsimi(message).then(response => {
+	  		resolve(response);
+		});
 	});
 }
 
