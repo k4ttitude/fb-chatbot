@@ -7,7 +7,8 @@
     "body-parser": "^1.18.3",
     "config": "^2.0.1",
     "express": "^4.16.4",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "simsimi": "^2.0.3"
   },
   "devDependencies": {},
   "scripts": {

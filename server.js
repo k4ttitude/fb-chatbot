@@ -5,6 +5,11 @@ const PAGE_ACCESS_TOKEN = 'EAAE73JnZByQcBAPEBSUGiRc8AldNfxVwxWE1Kajihe5dwlqlpUQK
 var http = require('http');
 var bodyParser = require('body-parser');
 var express = require('express');
+
+const simsimi = require('simsimi')({
+  key: 'b90c5eb9-ceaa-4988-8afa-b4a5b3633077',
+  api: 'http://sandbox.api.simsimi.com/request.p'
+});
  
 var app = express();
 // app.use(bodyParser.urlencoded({
@@ -34,9 +39,12 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
     req.body.entry.forEach(entry => {
       entry.messaging.forEach(event => {
         if (event.message && event.message.text) {
-          console.log("sent a message: " + event.message.text);
-          messageSender.sendMessage(event.sender.id, "Hello I'm a bot replying to your message: '" 
-            + event.message.text + "'");
+          // console.log("sent a message: " + event.message.text);
+          // messageSender.sendMessage(event.sender.id, "Hello I'm a bot replying to your message: '" 
+          //   + event.message.text + "'");
+          simsimi(event.message.text).then(response => {
+            messageSender.sendMessage(event.sender.id, response);
+          });
         }
       });
     });
