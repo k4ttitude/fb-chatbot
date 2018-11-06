@@ -14,7 +14,7 @@ var request = require("request");
 
 var messageSender = require('./messageSender');
 
-var simsimi = require('./response/simsimi');
+var simsimi = require('./messaging/simsimi');
  
 app.get('/', (req, res) => {
   res.send("Home page. Server running okay.");
@@ -33,7 +33,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
     req.body.entry.forEach(entry => {
       entry.messaging.forEach(event => {
         if (event.message && event.message.text) {
-          let response = simsimi.reply(event.message.text);
+          let response = simsimi.options(event.message.text);
           console.log(response);
           messageSender.sendMessage(event.sender.id, response);
           // simsimi(event.message.text).then(response => {

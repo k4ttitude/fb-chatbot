@@ -43,7 +43,7 @@ module.exports = options => {
  		if (typeof query === 'string') 
  			query = { text: query };
  		return request(api, Object.assign({ 
- 			key, lc, ft
+ 			key
  		}, query)).then(format);
  	};
 };
