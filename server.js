@@ -34,7 +34,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
       entry.messaging.forEach(event => {
         if (event.message && event.message.text) {
           let response = simsimi.reply(event.message.text);
-          messageSender.sendMessage(response);
+          messageSender.sendMessage(event.sender.id, response);
           // simsimi(event.message.text).then(response => {
           //   messageSender.sendMessage(event.sender.id, response);
           // });
