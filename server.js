@@ -37,9 +37,6 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
           promise.then(response => {
             messageSender.sendMessage(event.sender.id, response);
           });
-          // simsimi(event.message.text).then(response => {
-          //   messageSender.sendMessage(event.sender.id, response);
-          // });
         }
       });
     });
