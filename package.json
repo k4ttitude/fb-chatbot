@@ -8,7 +8,8 @@
     "config": "^2.0.1",
     "express": "^4.16.4",
     "request": "^2.88.0",
-    "simsimi": "^2.0.3"
+    "simsimi": "^2.0.3",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {},
   "scripts": {
