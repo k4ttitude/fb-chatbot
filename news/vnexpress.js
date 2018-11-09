@@ -1,0 +1,20 @@
+module.exports = {
+	home: 'https://vnexpress.net/rss/tin-moi-nhat.rss',
+	thoi_su: 'https://vnexpress.net/rss/thoi-su.rss',
+	the_gioi: 'https://vnexpress.net/rss/the-gioi.rss',
+	kinh_doanh: 'https://vnexpress.net/rss/kinh-doanh.rss',
+	startup: 'https://vnexpress.net/rss/startup.rss',
+	giai_tri: 'https://vnexpress.net/rss/giai-tri.rss',
+	the_thao: 'https://vnexpress.net/rss/the-thao.rss',
+	phap_luat: 'https://vnexpress.net/rss/phap-luat.rss',
+	giao_duc: 'https://vnexpress.net/rss/giao-duc.rss',
+	suc_khoe: 'https://vnexpress.net/rss/suc-khoe.rss',
+	doi_song: 'https://vnexpress.net/rss/gia-dinh.rss',
+	du_lich: 'https://vnexpress.net/rss/du-lich.rss',
+	khoa_hoc: 'https://vnexpress.net/rss/khoa-hoc.rss',
+	so_hoa: 'https://vnexpress.net/rss/so-hoa.rss',
+	xe: 'https://vnexpress.net/rss/oto-xe-may.rss',
+	cong_dong: 'https://vnexpress.net/rss/cong-dong.rss',
+	tam_su: 'https://vnexpress.net/rss/tam-su.rss',
+	fun: 'https://vnexpress.net/rss/cuoi.rss'
+}
