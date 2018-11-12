@@ -29,6 +29,36 @@ const sendMessage = (senderId, message) => {
   });
 }
 
+const sendButtons = (senderId, message, buttons) => {
+  request({
+    url: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: { access_token: PAGE_ACCESS_TOKEN, },
+    method: 'POST',
+    json: {
+      recipient: { id: senderId },
+      message: {
+        text: message,
+        buttons: buttons
+      },
+    }
+  }, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      // Message has been successfully received by Facebook.
+      console.log(
+        `Successfully sent message to endpoint: `,
+        JSON.stringify(body)
+      );
+    } else {
+      console.error(
+        `Failed calling Messenger API endpoint `,
+        response.statusCode,
+        response.statusMessage,
+        body.error
+      );
+    }
+  });
+}
+
 const sendOptions = (senderId, message, options) => {
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
@@ -61,5 +91,6 @@ const sendOptions = (senderId, message, options) => {
 
 module.exports = {
 	sendMessage,
+  sendButtons,
   sendOptions,
 };
