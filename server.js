@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 var server = http.createServer(app);
 var request = require("request");
 
-var messageSender = require('./MessageSender');
+var messageSender = require('./messageSender');
 
 var simsimi = require('./response/simsimi');
  
