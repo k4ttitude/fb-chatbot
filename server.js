@@ -44,7 +44,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
               let options = Object.keys(vnexpress).map(x => {
                 return { content_type: 'text', title: x, payload: x }
               });
-              messageSender.sendOptions(event.sender.id, "Select:", options);
+              messageSender.sendOptions(event.sender.id, "Select:", options.slice(0, 5));
               break;
             default:
               messageSender.sendMessage(event.sender.id, event.message.text);
