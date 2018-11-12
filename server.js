@@ -48,7 +48,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
                     webview_height_ratio: 'full'
                 }
               });
-              messageSender.sendButtons(event.sender.id, "Select:", buttons);
+              messageSender.sendButtons(event.sender.id, "Select:", buttons.slice(0, 5));
               break;
             default:
               messageSender.sendMessage(event.sender.id, event.message.text);
