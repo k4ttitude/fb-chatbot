@@ -45,7 +45,9 @@ const sendOptions = (senderId, message) => {
             payload: 'Home'
           },
           {
-            content_type: "I don't know"
+            content_type: 'text',
+            title: 'Sport',
+            payload: 'Sport'
           }
         ]
       },
