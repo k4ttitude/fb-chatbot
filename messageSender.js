@@ -37,8 +37,14 @@ const sendButtons = (senderId, message, buttons) => {
     json: {
       recipient: { id: senderId },
       message: {
-        text: message,
-        buttons: buttons
+        attachment: {
+          type: 'template',
+          payload: {
+            template_type: 'button',
+            text: message,
+            buttons: buttons
+          }
+        }
       },
     }
   }, (error, response, body) => {

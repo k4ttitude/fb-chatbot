@@ -42,7 +42,11 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
             case "category":
               let vnexpress = require('./news/vnexpress');
               let buttons = Object.keys(vnexpress).map(x => {
-                return { type: 'web_url', title: x, url: vnexpress[x] }
+                return { 
+                    type: 'web_url',
+                    title: x, url: vnexpress[x],
+                    webview_height_ratio: 'full'
+                }
               });
               messageSender.sendButtons(event.sender.id, "Select:", buttons);
               break;
