@@ -33,11 +33,12 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
     req.body.entry.forEach(entry => {
       entry.messaging.forEach(event => {
         if (event.message && event.message.text) {
-          let promise = simsimi.reply(event.message.text);
-          promise.then(response => {
-            // messageSender.sendMessage(event.sender.id, response);
-            messageSender.sendOptions(event.sender.id, response);
-          });
+          // let promise = simsimi.reply(event.message.text);
+          // promise.then(response => {
+          //   // messageSender.sendMessage(event.sender.id, response);
+          // });
+
+          messageSender.sendOptions(event.sender.id, event.message.text);
         }
       });
     });
