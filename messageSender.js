@@ -29,6 +29,45 @@ const sendMessage = (senderId, message) => {
   });
 }
 
+const sendOptions = (senderId, message) => {
+  request({
+    url: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: { access_token: PAGE_ACCESS_TOKEN, },
+    method: 'POST',
+    json: {
+      recipient: { id: senderId },
+      message: {
+        text: message,
+        quick_replies: [
+          {
+            content_type: 'text',
+            title: 'Home',
+            payload: 'Home'
+          },
+          {
+            content_type: "I don't know"
+          }
+        ]
+      },
+    }
+  }, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      // Message has been successfully received by Facebook.
+      console.log(
+        `Successfully sent message to endpoint: `,
+        JSON.stringify(body)
+      );
+    } else {
+      console.error(
+        `Failed calling Messenger API endpoint `,
+        response.statusCode,
+        response.statusMessage,
+        body.error
+      );
+    }
+  });
+}
+
 module.exports = {
 	sendMessage,
 };

@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 var server = http.createServer(app);
 var request = require("request");
 
-var messageSender = require('./messageSender');
+var messageSender = require('./MessageSender');
 
 var simsimi = require('./response/simsimi');
  
@@ -35,7 +35,8 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
         if (event.message && event.message.text) {
           let promise = simsimi.reply(event.message.text);
           promise.then(response => {
-            messageSender.sendMessage(event.sender.id, response);
+            // messageSender.sendMessage(event.sender.id, response);
+            messageSender.sendOptions(event.sender.id, response);
           });
         }
       });
