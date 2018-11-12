@@ -38,7 +38,18 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
           //   // messageSender.sendMessage(event.sender.id, response);
           // });
 
-          messageSender.sendOptions(event.sender.id, event.message.text);
+          switch (event.message.text) {
+            case "category":
+              let vnexpress = require('./news/vnexpress');
+              let options = Object.keys(vnexpress).map(x => {
+                return { content_type: 'text', title: x, payload: x }
+              });
+              messageSender.sendOptions(event.sender.id, "Select:", options);
+              break;
+            default:
+              messageSender.sendMessage(event.sender.id, event.mesage.text);
+              break;
+          }
         }
       });
     });
