@@ -47,7 +47,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
               messageSender.sendOptions(event.sender.id, "Select:", options);
               break;
             default:
-              messageSender.sendMessage(event.sender.id, event.mesage.text);
+              messageSender.sendMessage(event.sender.id, event.message.text);
               break;
           }
         }
