@@ -70,4 +70,5 @@ const sendOptions = (senderId, message) => {
 
 module.exports = {
 	sendMessage,
+  sendOptions,
 };
