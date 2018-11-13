@@ -1,6 +1,5 @@
 const toList = (list) => {
 	if (list && list.length != 0) {
-		console.log(list);
 		return list.map(item => {
 			return {
 				title: item.title[0],

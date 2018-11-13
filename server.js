@@ -65,7 +65,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
               promise.then(_result => {
                 if (_result && _result.length != 0) {
                   let elements = myUtil.toList(_result);
-                  messageSender.sendList(event.sender.id, elements);
+                  messageSender.sendList(event.sender.id, elements.slice(0, 4));
                 } else {
                   messageSender.sendMessage(event.sender.id, 'No article found.');
                 }
