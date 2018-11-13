@@ -34,9 +34,12 @@ const toButtons = list => {
 }
 
 const getDesData = des => {
+	let imgTagReg = /(<img.*(?:png|jpg))/i;
 	let imgUrlReg = /(https?:\/\/.*\.(?:png|jpg))/i;
-	let descriptionReg = /<\/br>.*/;
-	let imgUrlMatch = des.match(imgUrlReg);
+	let descriptionReg = /(<\/br>.*)/;
+
+	let imgTagMatch = des.match(imgTagReg);
+	let imgUrlMatch = imgTagMatch[0].match(imgUrlReg);
 	let descriptionMatch = des.match(descriptionReg);
 	return {
 		imgUrl: (imgUrlMatch && imgUrlMatch.length > 0) ? imgUrlMatch[0] : '',
