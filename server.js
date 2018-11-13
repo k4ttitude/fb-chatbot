@@ -61,17 +61,17 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
 
             default:
               // messageSender.sendMessage(event.sender.id, event.message.text);
-              let promise = rssParser.search(query, vnexpress.home);
-              promise.then(_result => {
-                if (_result && _result.length != 0) {
-                  let elements = myUtil.toList(_result);
-                  messageSender.sendList(event.sender.id, elements);
-                } else {
-                  messageSender.sendMessage(event.sender.id, 'No article found.');
-                }
-              }).catch(err => {
-                console.log('Promise rejected', error.message);
-              });
+              // let promise = rssParser.search(query, vnexpress.home);
+              // promise.then(_result => {
+              //   if (_result && _result.length != 0) {
+              //     let elements = myUtil.toList(_result);
+              //     messageSender.sendList(event.sender.id, elements);
+              //   } else {
+              //     messageSender.sendMessage(event.sender.id, 'No article found.');
+              //   }
+              // }).catch(err => {
+              //   console.log('Promise rejected', error.message);
+              // });
               break;
           }
         }
