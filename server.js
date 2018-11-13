@@ -33,58 +33,62 @@ app.get('/webhook', function(req, res) { // Đây là path để validate tooken
 
 var category = vnexpress.home;
  
+const handleMessage = (senderId, received_message) => {
+  if (received_message.text) {
+    var query = event.message.text.toLowerCase();
+    switch (query) {
+      case "!category":
+        let buttons = Object.keys(vnexpress).map(x => {
+          return { 
+              type: 'postback',
+              title: x, 
+              payload: '!category.' + x
+          }
+        });
+        messageSender.sendButtons(event.sender.id, 'Select category:', buttons.slice(0, 3));
+        break;
+
+      default:
+        let promise = rssParser.search(query, category);
+        promise.then(_result => {
+          if (_result && _result.length != 0) {
+            let elements = myUtil.toList(_result);
+            messageSender.sendList(event.sender.id, elements.slice(0, 4));
+          } else {
+            messageSender.sendMessage(event.sender.id, 'No article found.');
+          }
+        }).catch(err => {
+          console.log('Promise rejected', error.message);
+          messageSender.sendMessage(event.sender.id, 'Server error.');
+        });
+        break;
+    }
+  }
+}
+
+const handlePostback = (senderId, received_postback) => {
+  let payload = received_postback.payload;
+  let categoryReg = /^!category\..*$/;
+  if (payload && categoryReg.test(payload)) {
+    let option = payload.toLowerCase().slice(10);
+    category = vnexpress[option];
+  }
+}
+
 app.post('/webhook', function(req, res) {
   console.log("webhook received a request");
   if (req.body.object === 'page') {
-    console.log(req.body.entry);
     req.body.entry.forEach(entry => {
-      entry.messaging.forEach(event => {
-        if (event.message && event.message.text) {
-          // let promise = simsimi.reply(event.message.text);
-          // promise.then(response => {
-          //   // messageSender.sendMessage(event.sender.id, response);
-          // });
 
-          var query = event.message.text.toLowerCase();
+      let webhook_event = entry.messaging[0];
+      let senderId = webhook_event.sender.id;
+      
+      if (webhook_event.message) {
+        handleMessage(senderId, webhook_event.message);
+      } else if (webhook_event.postback) {
+        handlePostback(senderId, webhook_event.postback);
+      }
 
-          switch (query) {
-            case "!category":
-              let buttons = Object.keys(vnexpress).map(x => {
-                return { 
-                    type: 'postback',
-                    title: x, 
-                    payload: '!category.' + x
-                }
-              });
-              messageSender.sendButtons(event.sender.id, 'Select category:', buttons.slice(0, 3));
-              break;
-
-            default:
-              let promise = rssParser.search(query, category);
-              promise.then(_result => {
-                if (_result && _result.length != 0) {
-                  let elements = myUtil.toList(_result);
-                  messageSender.sendList(event.sender.id, elements.slice(0, 4));
-                } else {
-                  messageSender.sendMessage(event.sender.id, 'No article found.');
-                }
-              }).catch(err => {
-                console.log('Promise rejected', error.message);
-                messageSender.sendMessage(event.sender.id, 'Server error.');
-              });
-              break;
-          }
-        }
-      });
-
-      entry.postback.forEach(event => {
-        if (event.postback && event.postback.payload) {
-          if (/^!category\..*/.test(event.postback.payload)) {
-            var option = event.postback.payload.toLowerCase().slice(10);
-            category = vnexpress[option];
-          }
-        }
-      })
     });
 
     res.status(200).end();
