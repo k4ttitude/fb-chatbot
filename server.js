@@ -68,7 +68,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
                       url: item.link[0],
                       webview_height_ratio: 'full'
                     }
-                    messageSender.sendButtons(event.sender.id, null, [btn]);
+                    messageSender.sendButtons(event.sender.id, 'result', [btn]);
                   }
                 }
               });

@@ -46,8 +46,6 @@ const search = (query, category) => {
 
 module.exports = { search }
 
-console.log(search('lùi xe', vnexpress.home));
-
 // fs.readFile('./tin-moi-nhat.rss', (err, data) => {
 // 	parseString(data, (err, result) => {
 // 		console.log(result.rss);
