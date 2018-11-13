@@ -61,15 +61,16 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
               let promise = rssParser.search(query, vnexpress.home);
               promise.then(_result => {
                 if (_result && _result.length != 0) {
+                  let buttons = [];
                   for (let item of _result) {
-                    let btn = {
+                    buttons.push({
                       type: 'web_url',
                       title: item.title[0],
                       url: item.link[0],
                       webview_height_ratio: 'full'
-                    }
-                    messageSender.sendButtons(event.sender.id, 'result', [btn]);
+                    });
                   }
+                  messageSender.sendButtons(event.sender.id, 'result', buttons);
                 }
               });
               break;
