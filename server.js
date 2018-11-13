@@ -35,7 +35,7 @@ var category = vnexpress.home;
  
 const handleMessage = (senderId, received_message) => {
   if (received_message.text) {
-    var query = event.message.text.toLowerCase();
+    var query = received_message.text.toLowerCase();
     switch (query) {
       case "!category":
         let buttons = Object.keys(vnexpress).map(x => {
