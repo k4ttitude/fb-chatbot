@@ -60,7 +60,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
               break;
 
             default:
-              messageSender.sendMessage(event.sender.id, event.message.text);
+              // messageSender.sendMessage(event.sender.id, event.message.text);
               let promise = rssParser.search(query, vnexpress.home);
               promise.then(_result => {
                 if (_result && _result.length != 0) {
@@ -71,6 +71,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
                 }
               }).catch(err => {
                 console.log('Promise rejected', error.message);
+                messageSender.sendMessage(event.sender.id, 'Server error.');
               });
               break;
           }
