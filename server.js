@@ -38,7 +38,9 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
           //   // messageSender.sendMessage(event.sender.id, response);
           // });
 
-          switch (event.message.text) {
+          var query = event.message.text.toLowerCase();
+
+          switch (query) {
             case "category":
               let vnexpress = require('./news/vnexpress');
               let buttons = Object.keys(vnexpress).map(x => {
@@ -48,7 +50,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
                     webview_height_ratio: 'full'
                 }
               });
-              messageSender.sendButtons(event.sender.id, "Select:", buttons.slice(0, 1));
+              messageSender.sendButtons(event.sender.id, "Select:", buttons.slice(0, 3));
               break;
             default:
               messageSender.sendMessage(event.sender.id, event.message.text);
