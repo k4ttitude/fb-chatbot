@@ -16,6 +16,7 @@ var messageSender = require('./messageSender');
 
 var simsimi = require('./response/simsimi');
 
+var vnexpress = require('./news/vnexpress');
 var rssParser = require('./news/parser');
  
 app.get('/', (req, res) => {
@@ -44,7 +45,6 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
 
           switch (query) {
             case "category":
-              let vnexpress = require('./news/vnexpress');
               let buttons = Object.keys(vnexpress).map(x => {
                 return { 
                     type: 'web_url',
