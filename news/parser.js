@@ -27,7 +27,7 @@ const search = (query, category) => {
 		}
 		if (response && response.statusCode == 200) {
 			parseString(body, (err, result) => {
-				console.log(result.rss);
+				// console.log(result.rss);
 				let _result = [];
 				query = query.toLowerCase();
 				for (let article of result.rss.channel) {
@@ -43,7 +43,7 @@ const search = (query, category) => {
 	return undefined;
 }
 
-load(vnexpress.thoi_su);
+module.exports = { search }
 
 // fs.readFile('./tin-moi-nhat.rss', (err, data) => {
 // 	parseString(data, (err, result) => {
