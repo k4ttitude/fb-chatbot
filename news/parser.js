@@ -45,17 +45,3 @@ const search = (query, category) => {
 }
 
 module.exports = { search }
-
-search('a', vnexpress.home).then(data => {
-	var myUtil = require('../myUtil');
-	let list = myUtil.toList(data);
-	console.log(list[0]);
-}).catch(err => {
-	console.log('Error: ', err.message);
-})
-
-// fs.readFile('./tin-moi-nhat.rss', (err, data) => {
-// 	parseString(data, (err, result) => {
-// 		console.log(result.rss);
-// 	});
-// });

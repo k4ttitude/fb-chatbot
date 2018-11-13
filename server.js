@@ -50,7 +50,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
             case "category":
               let buttons = Object.keys(vnexpress).map(x => {
                 return { 
-                    type: 'button',
+                    type: 'postback',
                     title: x, 
                     payload: `category.${x}`
                 }
