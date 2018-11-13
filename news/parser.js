@@ -21,31 +21,32 @@ const load = (cat) => {
 }
 
 const search = (query, category) => {
-	request(category, (e, response, body) => {
-		if (e) {
-			console.log('Error: ', e);
-		}
-		if (response && response.statusCode == 200) {
-			parseString(body, (err, result) => {
-				// console.log(result.rss);
-				let _result = [];
-				query = query.toLowerCase();
-				for (let article of result.rss.channel[0].item) {
-					if (article.title[0].toLowerCase().includes(query) || 
-						article.description[0].toLowerCase().includes(query)) {
-						_result.push(article);
+	return new Promise((resolve, reject) => {
+		request(category, (e, response, body) => {
+			if (e) {
+				console.log('Error: ', e);
+			}
+			if (response && response.statusCode == 200) {
+				parseString(body, (err, result) => {
+					// console.log(result.rss);
+					let _result = [];
+					query = query.toLowerCase();
+					for (let article of result.rss.channel[0].item) {
+						if (article.title[0].toLowerCase().includes(query) || 
+							article.description[0].toLowerCase().includes(query)) {
+							_result.push(article);
+						}
 					}
-				}
-				return _result;
-			});
-		}
+					resolve(_result);
+				});
+			}
+		});
 	});
-	return undefined;
 }
 
 module.exports = { search }
 
-load(vnexpress.home);
+console.log(search('lùi xe', vnexpress.home));
 
 // fs.readFile('./tin-moi-nhat.rss', (err, data) => {
 // 	parseString(data, (err, result) => {

@@ -58,18 +58,20 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
 
             default:
               // messageSender.sendMessage(event.sender.id, event.message.text);
-              let _result = rssParser.search(query, vnexpress.home);
-              if (_result && _result.length != 0) {
-                for (let item of _result) {
-                  let btn = {
-                    type: 'web_url',
-                    title: item.title[0],
-                    url: item.link[0],
-                    webview_height_ratio: 'full'
+              let promise = rssParser.search(query, vnexpress.home);
+              promise.then(_result => {
+                if (_result && _result.length != 0) {
+                  for (let item of _result) {
+                    let btn = {
+                      type: 'web_url',
+                      title: item.title[0],
+                      url: item.link[0],
+                      webview_height_ratio: 'full'
+                    }
+                    messageSender.sendButtons(event.sender.id, null, [btn]);
                   }
-                  messageSender.sendButtons(event.sender.id, null, [btn]);
                 }
-              }
+              });
               break;
           }
         }
