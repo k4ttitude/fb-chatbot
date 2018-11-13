@@ -25,6 +25,7 @@ const search = (query, category) => {
 		request(category, (e, response, body) => {
 			if (e) {
 				console.log('Error: ', e);
+				reject(Error(e));
 			}
 			if (response && response.statusCode == 200) {
 				parseString(body, (err, result) => {
