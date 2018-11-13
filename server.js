@@ -33,7 +33,7 @@ app.get('/webhook', function(req, res) { // Đây là path để validate tooken
 
 var category = vnexpress.home;
  
-app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của người dùng gửi đến
+app.post('/webhook', function(req, res) {
   console.log("webhook received a request");
   if (req.body.object === 'page') {
     console.log(req.body.entry);
@@ -60,7 +60,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
               break;
 
             default:
-              let promise = rssParser.search(query, vnexpress.home);
+              let promise = rssParser.search(query, category);
               promise.then(_result => {
                 if (_result && _result.length != 0) {
                   let elements = myUtil.toList(_result);
@@ -76,6 +76,15 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
           }
         }
       });
+
+      entry.postback.forEach(event => {
+        if (event.postback && event.postback.payload) {
+          if (/^!category\..*/.test(event.postback.payload)) {
+            var option = event.postback.payload.toLowerCase().slice(10);
+            category = vnexpress[option];
+          }
+        }
+      })
     });
 
     res.status(200).end();
