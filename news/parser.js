@@ -14,7 +14,7 @@ const load = (cat) => {
 		}
 		if (response && response.statusCode == 200) {
 			parseString(body, (err, result) => {
-				console.log(result.rss);
+				console.log(result.rss.channel[0].item[1].title[0].includes('lùi xe'));
 			});
 		}
 	});
@@ -30,9 +30,9 @@ const search = (query, category) => {
 				// console.log(result.rss);
 				let _result = [];
 				query = query.toLowerCase();
-				for (let article of result.rss.channel) {
-					if (article.title.toLowerCase().includes(query) || 
-						article.description.toLowerCase().includes(query)) {
+				for (let article of result.rss.channel[0].item) {
+					if (article.title[0].toLowerCase().includes(query) || 
+						article.description[0].toLowerCase().includes(query)) {
 						_result.push(article);
 					}
 				}
@@ -44,6 +44,8 @@ const search = (query, category) => {
 }
 
 module.exports = { search }
+
+load(vnexpress.home);
 
 // fs.readFile('./tin-moi-nhat.rss', (err, data) => {
 // 	parseString(data, (err, result) => {

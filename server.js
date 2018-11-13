@@ -55,6 +55,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
               });
               messageSender.sendButtons(event.sender.id, "Select:", buttons.slice(0, 3));
               break;
+
             default:
               // messageSender.sendMessage(event.sender.id, event.message.text);
               let _result = rssParser.search(query, vnexpress.home);
@@ -62,8 +63,8 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
                 for (let item of _result) {
                   let btn = {
                     type: 'web_url',
-                    title: item.title,
-                    url: item.link,
+                    title: item.title[0],
+                    url: item.link[0],
                     webview_height_ratio: 'full'
                   }
                   messageSender.sendButtons(event.sender.id, null, [btn]);
