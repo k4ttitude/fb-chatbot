@@ -15,6 +15,8 @@ var request = require("request");
 var messageSender = require('./messageSender');
 
 var simsimi = require('./response/simsimi');
+
+var rssParser = require('./news/parser');
  
 app.get('/', (req, res) => {
   res.send("Home page. Server running okay.");
@@ -46,14 +48,27 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
               let buttons = Object.keys(vnexpress).map(x => {
                 return { 
                     type: 'web_url',
-                    title: x, url: vnexpress[x],
+                    title: x, 
+                    url: vnexpress[x],
                     webview_height_ratio: 'full'
                 }
               });
               messageSender.sendButtons(event.sender.id, "Select:", buttons.slice(0, 3));
               break;
             default:
-              messageSender.sendMessage(event.sender.id, event.message.text);
+              // messageSender.sendMessage(event.sender.id, event.message.text);
+              let _result = parser.search(query);
+              if (_result && _result.length != 0) {
+                for (let item of _result) {
+                  let btn = {
+                    type: 'web_url',
+                    title: item.title,
+                    url: item.link,
+                    webview_height_ratio: 'full'
+                  }
+                  messageSender.sendButtons(event.sender.id, null, [btn]);
+                }
+              }
               break;
           }
         }
