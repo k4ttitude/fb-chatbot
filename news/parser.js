@@ -41,7 +41,7 @@ const search = (query, category) => {
 			}
 			reject(Error('Search error: ', e));
 		});
-	}
+	});
 }
 
 module.exports = { search }
