@@ -18,7 +18,7 @@ var simsimi = require('./response/simsimi');
 
 var vnexpress = require('./news/vnexpress');
 var rssParser = require('./news/parser');
-var myUtil = require('./util');
+var myUtil = require('./myUtil');
  
 app.get('/', (req, res) => {
   res.send("Home page. Server running okay.");
@@ -60,18 +60,18 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
               break;
 
             default:
-              // messageSender.sendMessage(event.sender.id, event.message.text);
-              // let promise = rssParser.search(query, vnexpress.home);
-              // promise.then(_result => {
-              //   if (_result && _result.length != 0) {
-              //     let elements = myUtil.toList(_result);
-              //     messageSender.sendList(event.sender.id, elements);
-              //   } else {
-              //     messageSender.sendMessage(event.sender.id, 'No article found.');
-              //   }
-              // }).catch(err => {
-              //   console.log('Promise rejected', error.message);
-              // });
+              messageSender.sendMessage(event.sender.id, event.message.text);
+              let promise = rssParser.search(query, vnexpress.home);
+              promise.then(_result => {
+                if (_result && _result.length != 0) {
+                  let elements = myUtil.toList(_result);
+                  messageSender.sendList(event.sender.id, elements);
+                } else {
+                  messageSender.sendMessage(event.sender.id, 'No article found.');
+                }
+              }).catch(err => {
+                console.log('Promise rejected', error.message);
+              });
               break;
           }
         }
