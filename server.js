@@ -50,17 +50,15 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
             case "category":
               let buttons = Object.keys(vnexpress).map(x => {
                 return { 
-                    type: 'web_url',
+                    type: 'button',
                     title: x, 
-                    url: vnexpress[x],
-                    webview_height_ratio: 'full'
+                    payload: `category.${x}`
                 }
               });
-              messageSender.sendButtons(event.sender.id, "Select:", buttons.slice(0, 3));
+              messageSender.sendButtons(event.sender.id, 'Select category:', buttons.slice(0, 4));
               break;
 
             default:
-              // messageSender.sendMessage(event.sender.id, event.message.text);
               let promise = rssParser.search(query, vnexpress.home);
               promise.then(_result => {
                 if (_result && _result.length != 0) {
