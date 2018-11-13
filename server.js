@@ -57,7 +57,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
               break;
             default:
               // messageSender.sendMessage(event.sender.id, event.message.text);
-              let _result = parser.search(query);
+              let _result = parser.search(query, vnexpress.home);
               if (_result && _result.length != 0) {
                 for (let item of _result) {
                   let btn = {
