@@ -25,9 +25,7 @@ const search = (query, category) => {
 		request(category, (e, response, body) => {
 			if (e) {
 				console.log('Error: ', e);
-				reject(Error(e));
-			}
-			if (response && response.statusCode == 200) {
+			} else if (response && response.statusCode == 200) {
 				parseString(body, (err, result) => {
 					// console.log(result.rss);
 					let _result = [];
@@ -41,6 +39,7 @@ const search = (query, category) => {
 					resolve(_result);
 				});
 			}
+			reject(Error(e));
 		});
 	});
 }
