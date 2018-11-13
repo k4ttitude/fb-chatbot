@@ -1,5 +1,6 @@
-const toELements = list => {
+const toList = (list) => {
 	if (list && list.length != 0) {
+		console.log(list);
 		return list.map(item => {
 			return {
 				title: item.title[0],
@@ -10,7 +11,6 @@ const toELements = list => {
 					type: 'web_url',
 					url: item.link[0],
 					webview_height_ratio: 'full'
-
 				}]
             }
 		});
@@ -34,6 +34,6 @@ const toButtons = list => {
 }
 
 module.exports = {
-	toELements,
+	toList,
 	toButtons
 }
