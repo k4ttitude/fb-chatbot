@@ -3,7 +3,6 @@ const toList = (list) => {
 		return list.map(item => {
 			return {
 				title: item.title[0],
-				url: item.link[0],
 				subtitle: item.description[0],
 				buttons: [{
 					title: 'View',
