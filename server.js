@@ -69,6 +69,8 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
                 } else {
                   messageSender.sendMessage(event.sender.id, 'No article found.');
                 }
+              }, error => {
+                console.log('Promise rejected', error.message);
               });
               break;
           }
