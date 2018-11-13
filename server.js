@@ -29,6 +29,8 @@ app.get('/webhook', function(req, res) { // Đây là path để validate tooken
   }
   res.send('Error, wrong validation token');
 });
+
+var category = vnexpress.home;
  
 app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của người dùng gửi đến
   console.log("webhook received a request");
@@ -70,7 +72,9 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
                       webview_height_ratio: 'full'
                     });
                   }
-                  messageSender.sendButtons(event.sender.id, 'result', buttons);
+                  messageSender.sendButtons(event.sender.id, 'Result', buttons);
+                } else {
+                  messageSender.sendMessage(event.sender.id, 'No article found.');
                 }
               });
               break;
