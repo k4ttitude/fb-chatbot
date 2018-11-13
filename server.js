@@ -45,7 +45,7 @@ const handleMessage = (senderId, received_message) => {
               payload: '!category.' + x
           }
         });
-        messageSender.sendButtons(event.sender.id, 'Select category:', buttons.slice(0, 3));
+        messageSender.sendButtons(senderId, 'Select category:', buttons.slice(0, 3));
         break;
 
       default:
@@ -53,13 +53,13 @@ const handleMessage = (senderId, received_message) => {
         promise.then(_result => {
           if (_result && _result.length != 0) {
             let elements = myUtil.toList(_result);
-            messageSender.sendList(event.sender.id, elements.slice(0, 4));
+            messageSender.sendList(senderId, elements.slice(0, 4));
           } else {
-            messageSender.sendMessage(event.sender.id, 'No article found.');
+            messageSender.sendMessage(senderId, 'No article found.');
           }
         }).catch(err => {
           console.log('Promise rejected', error.message);
-          messageSender.sendMessage(event.sender.id, 'Server error.');
+          messageSender.sendMessage(senderId, 'Server error.');
         });
         break;
     }
