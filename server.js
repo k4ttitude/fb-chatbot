@@ -55,7 +55,7 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
                     payload: `category.${x}`
                 }
               });
-              messageSender.sendButtons(event.sender.id, 'Select category:', buttons.slice(0, 4));
+              messageSender.sendButtons(event.sender.id, 'Select category:', buttons.slice(0, 3));
               break;
 
             default:

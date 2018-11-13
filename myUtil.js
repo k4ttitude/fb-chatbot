@@ -39,7 +39,8 @@ const getDesData = des => {
 	let descriptionReg = /(<\/br>.*)/;
 
 	let imgTagMatch = des.match(imgTagReg);
-	let imgUrlMatch = imgTagMatch[0].match(imgUrlReg);
+	let imgUrlMatch = (imgTagMatch && imgTagMatch.length != 0) ?
+		imgTagMatch[0].match(imgUrlReg) : [''];
 	let descriptionMatch = des.match(descriptionReg);
 	return {
 		imgUrl: (imgUrlMatch && imgUrlMatch.length > 0) ? imgUrlMatch[0] : '',
