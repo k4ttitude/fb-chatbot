@@ -47,12 +47,12 @@ app.post('/webhook', function(req, res) { // Phần sử lý tin nhắn của ng
           var query = event.message.text.toLowerCase();
 
           switch (query) {
-            case "category":
+            case "!category":
               let buttons = Object.keys(vnexpress).map(x => {
                 return { 
                     type: 'postback',
                     title: x, 
-                    payload: `category.${x}`
+                    payload: '!category.' + x
                 }
               });
               messageSender.sendButtons(event.sender.id, 'Select category:', buttons.slice(0, 3));
