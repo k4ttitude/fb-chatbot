@@ -36,14 +36,20 @@ var category = vnexpress.home;
 const sendCategory = (senderId) => {
   let categories = myUtil.categoryQuickReplies();
   let start = 0;
-  let tasks = [];
+  // let tasks = [];
+  // while (start < categories.length) {
+  //   Promise.all(tasks).then(result => {
+  //     let message = (start == 0) ? 'Select category: ' : 'or';
+  //     tasks.push(messageSender.
+  //       sendQuickReplies(senderId, message, categories.slice(start, start + 11)));
+  //     start += 11;
+  //   });
+  // }
   while (start < categories.length) {
-    Promise.all(tasks).then(result => {
-      let message = (start == 0) ? 'Select category: ' : 'or';
-      tasks.push(messageSender.
-        sendQuickReplies(senderId, message, categories.slice(start, start + 11)));
-      start += 11;
-    });
+    let message = (start == 0) ? 'Select category: ' : 'or';
+    await messageSender.
+      sendQuickReplies(senderId, message, categories.slice(start, start + 11));
+    start += 11;
   }
 }
 
