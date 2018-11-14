@@ -101,11 +101,16 @@ const handleMessage = (senderId, received_message) => {
 
 const handlePostback = (senderId, received_postback) => {
   let payload = received_postback.payload;
+  if (!payload) 
+    return;
+
   let categoryReg = /^!category\..*$/;
-  if (payload && categoryReg.test(payload)) {
+  if (categoryReg.test(payload)) {
     let option = payload.toLowerCase().slice(10);
     category = vnexpress[option];
     console.log("postback option:", option);
+  } else if (payload.equals('!more')) {
+    send4(senderId);
   }
 }
 
@@ -116,8 +121,6 @@ app.post('/webhook', function(req, res) {
 
       let webhook_event = entry.messaging[0];
       let senderId = webhook_event.sender.id;
-      
-      console.log(JSON.stringify(webhook_event));
 
       if (webhook_event.message) {
         handleMessage(senderId, webhook_event.message);
