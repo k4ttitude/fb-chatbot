@@ -32,21 +32,32 @@ app.get('/webhook', function(req, res) { // Đây là path để validate tooken
 });
 
 var category = vnexpress.home;
- 
+
+const sendCategory = (senderId) => {
+  let categories = myUtil.categoryQuickReplies();
+  let start = 0;
+  while (start < categories.length) {
+    let message = (start == 0) ? 'Select category: ' : 'or';
+    messageSender.sendQuickReplies(senderId, message, categories.slice(start, 11));
+    start += 11;
+  }
+}
+
 const handleMessage = (senderId, received_message) => {
   if (received_message.text) {
     var query = received_message.text.toLowerCase();
     console.log("message: ", query);
     switch (query) {
       case "!category":
-        let buttons = Object.keys(vnexpress).map(x => {
-          return { 
-              type: 'postback',
-              title: x, 
-              payload: '!category.' + x
-          }
-        });
-        messageSender.sendButtons(senderId, 'Select category:', buttons.slice(0, 3));
+        // let buttons = Object.keys(vnexpress).map(x => {
+        //   return { 
+        //       type: 'postback',
+        //       title: x, 
+        //       payload: '!category.' + x
+        //   }
+        // });
+        // messageSender.sendButtons(senderId, 'Select category:', buttons.slice(0, 3));
+        sendCategory(senderId);
         break;
 
       default:

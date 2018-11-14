@@ -136,7 +136,7 @@ const sendButtons = (senderId, message, buttons) => {
   });
 }
 
-const sendOptions = (senderId, message, options) => {
+const sendQuickReplies = (senderId, message, options) => {
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: PAGE_ACCESS_TOKEN, },
@@ -171,5 +171,5 @@ module.exports = {
   sendGeneric,
   sendList,
   sendButtons,
-  sendOptions,
+  sendQuickReplies
 };

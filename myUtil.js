@@ -52,6 +52,18 @@ const toButtons = list => {
 	}
 }
 
+const categoryQuickReplies = () => {
+	let vnexpress = require('./news/vnexpress');
+	let categories = Object.keys(vnexpress);
+	return categories.map(item => {
+		return {
+			content_type: 'text',
+	        title: item,
+	        payload: '!category.' + item
+        }
+	});
+}
+
 const getDesData = des => {
 	let imgTagReg = /(<img.*(?:png|jpg))/i;
 	let imgUrlReg = /(https?:\/\/.*\.(?:png|jpg))/i;
@@ -71,5 +83,6 @@ module.exports = {
 	toSingleItem,
 	toList,
 	toButtons,
+	categoryQuickReplies,
 	getDesData
 }
