@@ -12,6 +12,8 @@ app.use(bodyParser.json());
 var server = http.createServer(app);
 var request = require("request");
 
+// ======= My modules ============
+
 var messageSender = require('./messageSender');
 
 var simsimi = require('./response/simsimi');
@@ -19,6 +21,11 @@ var simsimi = require('./response/simsimi');
 var vnexpress = require('./news/vnexpress');
 var rssParser = require('./news/parser');
 var myUtil = require('./myUtil');
+
+// Constants
+const QUICK_REPLY_LENGTH = 11;
+const BUTTONS_LENGTH = 3;
+const LIST_LENGTH = 4;
  
 app.get('/', (req, res) => {
   res.send("Home page. Server running okay.");
@@ -33,25 +40,39 @@ app.get('/webhook', function(req, res) { // Đây là path để validate tooken
 
 var category = vnexpress.home;
 
-const sendCategory = async (senderId) => {
-  let categories = myUtil.categoryQuickReplies();
-  let start = 0;
-  // let tasks = [];
-  // while (start < categories.length) {
-  //   Promise.all(tasks).then(result => {
-  //     let message = (start == 0) ? 'Select category: ' : 'or';
-  //     tasks.push(messageSender.
-  //       sendQuickReplies(senderId, message, categories.slice(start, start + 11)));
-  //     start += 11;
-  //   });
-  // }
-  while (start < categories.length) {
-    let message = (start == 0) ? 'Select category: ' : 'or';
-    await messageSender.
-      sendQuickReplies(senderId, message, categories.slice(start, start + 11)).then(result => 
-        console.log(`sent a options list from ${start} to ${start+11}`));
+var remainResult;
 
-    start += 11;
+const sendResult = (senderId, query, category) => {
+  let promise = rssParser.search(query, category);
+  promise.then(_result => {
+    if (_result && _result.length != 0) {
+      if (_result.length > 1) {
+        remainResult = myUtil.toList(_result);
+        send4(senderId);
+      } else {
+        let element = myUtil.toSingleItem(_result);
+        messageSender.sendGeneric(senderId, element);
+      }
+    } else {
+      messageSender.sendMessage(senderId, 'No article found.');
+    }
+  }).catch(err => {
+    console.log('Promise rejected', err.message);
+    messageSender.sendMessage(senderId, 'Server error.');
+  });
+}
+
+const send4 = senderId => {
+  if (remainResult.length > LIST_LENGTH) {
+    let button = {
+      title: 'View more...',
+      type: 'postback',
+      payload: '!more'
+    }
+    messageSender.sendList(senderId, remainResult.slice(0, LIST_LENGTH), [button]);
+    remainResult = remainResult.slice(LIST_LENGTH + 1);
+  } else{
+    messageSender.sendList(senderId, remainResult.slice(0, LIST_LENGTH));              
   }
 }
 
@@ -65,36 +86,14 @@ const handleMessage = (senderId, received_message) => {
     var query = received_message.text.toLowerCase();
     console.log("message: ", query);
     switch (query) {
+      
       case "!category":
-        // let buttons = Object.keys(vnexpress).map(x => {
-        //   return { 
-        //       type: 'postback',
-        //       title: x, 
-        //       payload: '!category.' + x
-        //   }
-        // });
-        // messageSender.sendButtons(senderId, 'Select category:', buttons.slice(0, 3));
-        sendCategory(senderId);
+        messageSender.sendQuickReplies(senderId, 'Select category: ',
+          myUtil.categoryQuickReplies().slice(0, QUICK_REPLY_LENGTH));
         break;
 
       default:
-        let promise = rssParser.search(query, category);
-        promise.then(_result => {
-          if (_result && _result.length != 0) {
-            if (_result.length > 1) {
-              let elements = myUtil.toList(_result);
-              messageSender.sendList(senderId, elements.slice(0, 4));
-            } else {
-              let element = myUtil.toSingleItem(_result);
-              messageSender.sendGeneric(senderId, element);
-            }
-          } else {
-            messageSender.sendMessage(senderId, 'No article found.');
-          }
-        }).catch(err => {
-          console.log('Promise rejected', err.message);
-          messageSender.sendMessage(senderId, 'Server error.');
-        });
+        sendResult(senderId, query);
         break;
     }
   }

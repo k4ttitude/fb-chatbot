@@ -64,8 +64,8 @@ request({
   });
 }
 
-const sendList = (senderId, elements) => {
-request({
+const sendList = (senderId, elements, buttons) => {
+  request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: PAGE_ACCESS_TOKEN, },
     method: 'POST',
@@ -77,7 +77,8 @@ request({
           payload: {
             template_type: 'list',
             top_element_style: 'compact',
-            elements: elements
+            elements: elements,
+            buttons: (buttons) ? buttons : []
           }
         }
       },
