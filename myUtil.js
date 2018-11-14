@@ -1,3 +1,22 @@
+const toSingleItem = (list) => {
+	if (list && list.length != 0) {
+		let item = list[0];
+		let desData = getDesData(item.description[0]);
+		return {
+			title: item.title[0],
+			subtitle: desData.description,
+			image_url: desData.imgUrl,
+			default_action: {
+				type: 'web_url',
+				url: item.link[0],
+				webview_height_ratio: 'tall'
+			}
+		}
+	} else {
+		return null;
+	}
+}
+
 const toList = (list) => {
 	if (list && list.length != 0) {
 		return list.map(item => {
@@ -49,6 +68,7 @@ const getDesData = des => {
 }
 
 module.exports = {
+	toSingleItem,
 	toList,
 	toButtons,
 	getDesData

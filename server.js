@@ -36,6 +36,7 @@ var category = vnexpress.home;
 const handleMessage = (senderId, received_message) => {
   if (received_message.text) {
     var query = received_message.text.toLowerCase();
+    console.log("message: ", query);
     switch (query) {
       case "!category":
         let buttons = Object.keys(vnexpress).map(x => {
@@ -52,8 +53,13 @@ const handleMessage = (senderId, received_message) => {
         let promise = rssParser.search(query, category);
         promise.then(_result => {
           if (_result && _result.length != 0) {
-            let elements = myUtil.toList(_result);
-            messageSender.sendList(senderId, elements.slice(0, 4));
+            if (_result.length > 1) {
+              let elements = myUtil.toList(_result);
+              messageSender.sendList(senderId, elements.slice(0, 4));
+            } else {
+              let element = myUtil.toSingleItem(_result);
+              messageSender.sendGeneric(senderId, element);
+            }
           } else {
             messageSender.sendMessage(senderId, 'No article found.');
           }
@@ -72,7 +78,7 @@ const handlePostback = (senderId, received_postback) => {
   if (payload && categoryReg.test(payload)) {
     let option = payload.toLowerCase().slice(10);
     category = vnexpress[option];
-    console.log("webhook received a option: ", option);
+    console.log("postback option: ", option);
   }
 }
 
