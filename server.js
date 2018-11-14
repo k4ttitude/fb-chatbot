@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 var server = http.createServer(app);
 var request = require("request");
 
-// ======= My modules ============
+// ======= MY MODULES ============
 
 var messageSender = require('./messageSender');
 
@@ -22,7 +22,7 @@ var vnexpress = require('./news/vnexpress');
 var rssParser = require('./news/parser');
 var myUtil = require('./myUtil');
 
-// Constants
+// CONSTANTS
 const QUICK_REPLY_LENGTH = 11;
 const BUTTONS_LENGTH = 3;
 const LIST_LENGTH = 4;
