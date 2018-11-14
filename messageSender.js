@@ -168,6 +168,7 @@ const sendOptions = (senderId, message, options) => {
 
 module.exports = {
 	sendMessage,
+  sendGeneric,
   sendList,
   sendButtons,
   sendOptions,
