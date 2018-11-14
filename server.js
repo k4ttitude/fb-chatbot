@@ -33,7 +33,7 @@ app.get('/webhook', function(req, res) { // Đây là path để validate tooken
 
 var category = vnexpress.home;
 
-const sendCategory = (senderId) => {
+const sendCategory = async (senderId) => {
   let categories = myUtil.categoryQuickReplies();
   let start = 0;
   // let tasks = [];
