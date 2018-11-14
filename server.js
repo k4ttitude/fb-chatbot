@@ -109,7 +109,7 @@ const handlePostback = (senderId, received_postback) => {
     let option = payload.toLowerCase().slice(10);
     category = vnexpress[option];
     console.log("postback option:", option);
-  } else if (payload.equals('!more')) {
+  } else if (payload === '!more') {
     send4(senderId);
   }
 }
