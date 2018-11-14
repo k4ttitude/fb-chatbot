@@ -72,6 +72,7 @@ const handlePostback = (senderId, received_postback) => {
   if (payload && categoryReg.test(payload)) {
     let option = payload.toLowerCase().slice(10);
     category = vnexpress[option];
+    console.log("webhook received a option: ", option);
   }
 }
 
