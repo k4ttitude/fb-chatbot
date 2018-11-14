@@ -42,7 +42,7 @@ var category = vnexpress.home;
 
 var remainResult;
 
-const sendResult = (senderId, query, category) => {
+const sendResult = (senderId, query) => {
   let promise = rssParser.search(query, category);
   promise.then(_result => {
     if (_result && _result.length != 0) {
@@ -57,7 +57,7 @@ const sendResult = (senderId, query, category) => {
       messageSender.sendMessage(senderId, 'No article found.');
     }
   }).catch(err => {
-    console.log('Promise rejected', err.message);
+    console.log('Promise rejected:', err.message);
     messageSender.sendMessage(senderId, 'Server error.');
   });
 }
@@ -71,7 +71,7 @@ const send4 = senderId => {
     }
     messageSender.sendList(senderId, remainResult.slice(0, LIST_LENGTH), [button]);
     remainResult = remainResult.slice(LIST_LENGTH + 1);
-  } else{
+  } else {
     messageSender.sendList(senderId, remainResult.slice(0, LIST_LENGTH));              
   }
 }
@@ -84,7 +84,7 @@ const handleMessage = (senderId, received_message) => {
   }
   if (received_message.text) {
     var query = received_message.text.toLowerCase();
-    console.log("message: ", query);
+    console.log("message:", query);
     switch (query) {
       
       case "!category":
@@ -105,7 +105,7 @@ const handlePostback = (senderId, received_postback) => {
   if (payload && categoryReg.test(payload)) {
     let option = payload.toLowerCase().slice(10);
     category = vnexpress[option];
-    console.log("postback option: ", option);
+    console.log("postback option:", option);
   }
 }
 
