@@ -48,7 +48,9 @@ const sendCategory = async (senderId) => {
   while (start < categories.length) {
     let message = (start == 0) ? 'Select category: ' : 'or';
     await messageSender.
-      sendQuickReplies(senderId, message, categories.slice(start, start + 11));
+      sendQuickReplies(senderId, message, categories.slice(start, start + 11)).then(result => 
+        console.log(`sent a options list from ${start} to ${start+11}`));
+
     start += 11;
   }
 }
