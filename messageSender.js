@@ -137,32 +137,36 @@ const sendButtons = (senderId, message, buttons) => {
 }
 
 const sendQuickReplies = (senderId, message, options) => {
-  request({
-    url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: PAGE_ACCESS_TOKEN, },
-    method: 'POST',
-    json: {
-      recipient: { id: senderId },
-      message: {
-        text: message,
-        quick_replies: options
-      },
-    }
-  }, (error, response, body) => {
-    if (!error && response.statusCode === 200) {
-      // Message has been successfully received by Facebook.
-      console.log(
-        `Successfully sent message to endpoint: `,
-        JSON.stringify(body)
-      );
-    } else {
-      console.error(
-        `Failed calling Messenger API endpoint `,
-        response.statusCode,
-        response.statusMessage,
-        body.error
-      );
-    }
+  return new Promise((resolve, reject) => {
+    request({
+      url: 'https://graph.facebook.com/v2.6/me/messages',
+      qs: { access_token: PAGE_ACCESS_TOKEN, },
+      method: 'POST',
+      json: {
+        recipient: { id: senderId },
+        message: {
+          text: message,
+          quick_replies: options
+        },
+      }
+    }, (error, response, body) => {
+      if (!error && response.statusCode === 200) {
+        // Message has been successfully received by Facebook.
+        console.log(
+          `Successfully sent message to endpoint: `,
+          JSON.stringify(body)
+        );
+        resolve('sent');
+      } else {
+        console.error(
+          `Failed calling Messenger API endpoint `,
+          response.statusCode,
+          response.statusMessage,
+          body.error
+        );
+        reject('failed')
+      }
+    });
   });
 }
 

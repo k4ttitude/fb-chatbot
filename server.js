@@ -36,16 +36,22 @@ var category = vnexpress.home;
 const sendCategory = (senderId) => {
   let categories = myUtil.categoryQuickReplies();
   let start = 0;
+  let tasks = [];
   while (start < categories.length) {
-    let message = (start == 0) ? 'Select category: ' : 'or';
-    messageSender.sendQuickReplies(senderId, message, categories.slice(start, start + 11));
-    start += 11;
+    Promise.all(tasks).then(result => {
+      let message = (start == 0) ? 'Select category: ' : 'or';
+      tasks.push(messageSender.
+        sendQuickReplies(senderId, message, categories.slice(start, start + 11)));
+      start += 11;
+    });
   }
 }
 
 const handleMessage = (senderId, received_message) => {
   if (received_message.quick_reply) {
-    console.log('quick_reply: ', received_message.quick_reply);
+    // console.log('quick_reply: ', received_message.quick_reply);
+    handlePostback(senderId, received_message.quick_reply);
+    return;
   }
   if (received_message.text) {
     var query = received_message.text.toLowerCase();
