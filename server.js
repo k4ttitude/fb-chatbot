@@ -65,8 +65,8 @@ const sendResult = (senderId, query) => {
 const send4 = senderId => {
   if (remainResult.length > LIST_LENGTH) {
     let button = {
-      title: 'View more...',
       type: 'postback',
+      title: 'View more...',
       payload: '!more'
     }
     messageSender.sendList(senderId, remainResult.slice(0, LIST_LENGTH), [button]);
@@ -117,6 +117,8 @@ app.post('/webhook', function(req, res) {
       let webhook_event = entry.messaging[0];
       let senderId = webhook_event.sender.id;
       
+      console.log(JSON.stringify(webhook_event));
+
       if (webhook_event.message) {
         handleMessage(senderId, webhook_event.message);
       } else if (webhook_event.postback) {
