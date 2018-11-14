@@ -64,7 +64,7 @@ const handleMessage = (senderId, received_message) => {
             messageSender.sendMessage(senderId, 'No article found.');
           }
         }).catch(err => {
-          console.log('Promise rejected', error.message);
+          console.log('Promise rejected', err.message);
           messageSender.sendMessage(senderId, 'Server error.');
         });
         break;
