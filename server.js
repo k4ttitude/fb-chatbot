@@ -1,6 +1,5 @@
-const APP_SECRET = '6088d6960a9929d5b68d61c192ad642f';
+const APP_SECRET = '';
 const VALIDATION_TOKEN = 'MyToken';
-// const PAGE_ACCESS_TOKEN = 'EAAE73JnZByQcBAJJRd3lpoC2I5HZCZAx9zZAsZAWG2HY8DgxN6vZAb9ekJ0PSBA0csCfZCPxdnPln1nH4JrCmumv7EPNUU5uh0AwoApsApVcGm9msoV0HzDzwNLx06qbilFzM1STBYU2Y5djnGCANYZCdb5ZBj3qqjbLFIlOrnRA5hvb37AUXZCu69';
  
 var http = require('http');
 var bodyParser = require('body-parser');
@@ -10,7 +9,7 @@ var app = express();
 app.use(bodyParser.json());
 
 var server = http.createServer(app);
-var request = require("request");
+var request = require('request');
 
 // ======= MY MODULES ============
 
@@ -28,10 +27,10 @@ const BUTTONS_LENGTH = 3;
 const LIST_LENGTH = 4;
  
 app.get('/', (req, res) => {
-  res.send("Home page. Server running okay.");
+  res.send('Home page. Server running okay.');
 });
  
-app.get('/webhook', function(req, res) { // Đây là path để validate tooken bên app facebook gửi qua
+app.get('/webhook', function(req, res) {
   if (req.query['hub.verify_token'] == VALIDATION_TOKEN) {
     res.send(req.query['hub.challenge']);
   }
@@ -60,7 +59,7 @@ const sendResult = (senderId, query) => {
     console.log('Promise rejected:', err.message);
     messageSender.sendMessage(senderId, 'Server error.');
   });
-}
+};
 
 const send4 = senderId => {
   if (remainResult.length > LIST_LENGTH) {
@@ -68,13 +67,13 @@ const send4 = senderId => {
       type: 'postback',
       title: 'View more...',
       payload: '!more'
-    }
+    };
     messageSender.sendList(senderId, remainResult.slice(0, LIST_LENGTH), [button]);
     remainResult = remainResult.slice(LIST_LENGTH + 1);
   } else {
     messageSender.sendList(senderId, remainResult.slice(0, LIST_LENGTH));              
   }
-}
+};
 
 const handleMessage = (senderId, received_message) => {
   if (received_message.quick_reply) {
@@ -84,10 +83,10 @@ const handleMessage = (senderId, received_message) => {
   }
   if (received_message.text) {
     var query = received_message.text.toLowerCase();
-    console.log("message:", query);
+    console.log('message:', query);
     switch (query) {
       
-      case "!category":
+      case '!category':
         messageSender.sendQuickReplies(senderId, 'Select category: ',
           myUtil.categoryQuickReplies().slice(0, QUICK_REPLY_LENGTH));
         break;
@@ -97,7 +96,7 @@ const handleMessage = (senderId, received_message) => {
         break;
     }
   }
-}
+};
 
 const handlePostback = (senderId, received_postback) => {
   let payload = received_postback.payload;
@@ -108,14 +107,14 @@ const handlePostback = (senderId, received_postback) => {
   if (categoryReg.test(payload)) {
     let option = payload.toLowerCase().slice(10);
     category = vnexpress[option];
-    console.log("postback option:", option);
+    console.log('postback option:', option);
   } else if (payload === '!more') {
     send4(senderId);
   }
-}
+};
 
 app.post('/webhook', function(req, res) {
-  console.log("webhook received a request");
+  console.log('webhook received a request');
   if (req.body.object === 'page') {
     req.body.entry.forEach(entry => {
 
@@ -137,8 +136,8 @@ app.post('/webhook', function(req, res) {
 });
  
 app.set('port', process.env.PORT || 5000);
-app.set('ip', process.env.IP || "0.0.0.0");
+app.set('ip', process.env.IP || '0.0.0.0');
  
 server.listen(app.get('port'), app.get('ip'), function() {
-  console.log("Chat bot server listening at %s:%d ", app.get('ip'), app.get('port'));
+  console.log('Chat bot server listening at %s:%d ', app.get('ip'), app.get('port'));
 });

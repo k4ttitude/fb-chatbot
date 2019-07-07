@@ -18,7 +18,7 @@ const load = (cat) => {
 			});
 		}
 	});
-}
+};
 
 const search = (query, category) => {
 	return new Promise((resolve, reject) => {
@@ -42,6 +42,6 @@ const search = (query, category) => {
 			reject(Error('Search error: ', e));
 		});
 	});
-}
+};
 
 module.exports = { search }
