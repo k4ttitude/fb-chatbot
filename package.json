@@ -5,7 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "config": "^2.0.1",
+    "config": "^3.3.8",
     "express": "^4.16.4",
     "request": "^2.88.0",
     "simsimi": "^2.0.3",
